@@ -1,20 +1,27 @@
-# Ansible Role: Lighthouse
-Простая Ansible-роль для установки и настройки легковесного веб-интерфейса Lighthouse для ClickHouse на Ubuntu 24.
+# LightHouse Role
 
-## Требования
-* Веб-сервер (Nginx или Apache) на целевом хосте для раздачи статики.
+Роль для установки веб-интерфейса LightHouse под управлением Nginx на Ubuntu 24.
 
-## Переменные роли
-Вы можете настроить версию или путь установки (необязательно):
-* `lighthouse_version`: "master" — ветка или тег Lighthouse для загрузки.
-* `lighthouse_install_dir`: "/var/www/lighthouse" — директория для размещения файлов.
+## Переменные роли (Variables)
 
-## Пример Playbook
+Изменяемые параметры по умолчанию (`defaults/main.yml`):
+* `lighthouse_dir` — Директория, куда будет склонирован интерфейс (`/var/www/lighthouse`).
+* `lighthouse_force_update` — Принудительное обновление репозитория при каждом запуске (`false`).
+
+Внутренние переменные (`vars/main.yml`):
+* `lighthouse_vcs_url` — Ссылка на официальный Git-репозиторий LightHouse.
+* `lighthouse_vcs_version` — Целевая ветка репозитория (`master`).
+
+## Теги (Tags)
+Вы можете запускать части роли отдельно с помощью тегов:
+* `nginx` — Всё, что связано с установкой и настройкой веб-сервера.
+* `lighthouse` — Скачивание и настройка прав для самого интерфейса.
+
+## Пример использования (Example Playbook)
+
 ```yaml
-- hosts: webservers
+- hosts: lighthouse
+  become: true
   roles:
-    - role: clickhouse 
+    - lighthouse-role
 ```
-
-## Лицензия
-BSD
