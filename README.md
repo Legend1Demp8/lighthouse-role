@@ -1,6 +1,6 @@
 # LightHouse Role
 
-Роль для установки веб-интерфейса LightHouse под управлением Nginx на Ubuntu 24.
+Роль для установки веб-интерфейса LightHouse (для ClickHouse) под управлением Nginx.
 
 ## Переменные роли (Variables)
 
@@ -12,6 +12,10 @@
 * `lighthouse_vcs_url` — Ссылка на официальный Git-репозиторий LightHouse.
 * `lighthouse_vcs_version` — Целевая ветка репозитория (`master`).
 
+## Шаблоны (Templates)
+Роль использует шаблон конфигурации веб-сервера:
+* `lighthouse.conf.j2` — Конфигурационный файл Nginx (Virtual Host) для раздачи интерфейса LightHouse.
+
 ## Теги (Tags)
 Вы можете запускать части роли отдельно с помощью тегов:
 * `nginx` — Всё, что связано с установкой и настройкой веб-сервера.
@@ -19,7 +23,8 @@
 
 ## Пример использования (Example Playbook)
 
-```yaml
+```
+yaml
 - hosts: lighthouse
   become: true
   roles:
